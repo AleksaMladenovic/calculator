@@ -12,6 +12,7 @@ body{
     justify-content: center;
     align-items: center;
     height: 100%;
+    font-family: 'Fira Code';
 }
 #calculatorDiv{
     background-color: black;
@@ -21,9 +22,16 @@ body{
     height: 650px;
     border-radius: 50px;
 }
-#display{
+#header{
     width: 100%;
     height: 150px;
+    color: white;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+#display{
+    font-size: 80px;
 }
 #buttonsDiv{
     width: 400px;
