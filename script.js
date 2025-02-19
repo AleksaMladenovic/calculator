@@ -3,13 +3,22 @@ const display = document.querySelector("#display");
 const plusToMinus = document.querySelector("#plusToMinus");
 const operationBtnsArray = [...document.querySelectorAll(".operation")];
 const equalBtn = document.querySelector("#equal");
+const dotBtn = document.querySelector("#dot");
 
 let readyForWritting = true;
 let readyForSign = false;
 let firstOperand = null;
 let seccondOperand = null;
 let lastOperation = null;
+let dotClicked = false;
 const DISPLAY_SIZE = 9;
+
+dotBtn.addEventListener("click", (e)=>{
+    if(!dotClicked)
+    {
+        dotClicked=clickedNumber(e);
+    }
+})
 
 numberBtnsArray.forEach((numberBtn) => {
   numberBtn.addEventListener("click", clickedNumber);
@@ -24,23 +33,27 @@ equalBtn.addEventListener("click", equalOperation);
 plusToMinus.addEventListener("click", () => {
   if (lastOperation === null || seccondOperand !== null)
     if (
-      display.textContent.length &&
-      display.textContent.length <= DISPLAY_SIZE - 1
+      display.textContent.length //&&
+      //display.textContent.length <= DISPLAY_SIZE - 1
     ) {
-      if (display.textContent[0] != "-") {
+      if (display.textContent[0] !== "-") {
         display.textContent = "-" + display.textContent;
+        displayTheResult(+display.textContent);
       } else {
         display.textContent = display.textContent.slice(1);
       }
 
-      if (seccondOperand === null) firstOperand = -firstOperand;
+      if (seccondOperand === null&&firstOperand!==null) firstOperand = -firstOperand;
+    } else if(display.textContent.length ===DISPLAY_SIZE){
+        
     }
 });
 
 function clickedNumber(e) {
   if (readyForWritting) {
-    addNumber(e.currentTarget.textContent);
+    return addNumber(e.currentTarget.textContent);
   }
+  return false;
 }
 
 function addNumber(number) {
@@ -55,12 +68,15 @@ function addNumber(number) {
   if (display.textContent.length >= DISPLAY_SIZE) readyForWritting = false;
   else {
     display.textContent += number;
+    if(number!=='.' &&+display.textContent!==0)
     display.textContent = +display.textContent;
     readyForSign = true;
     if (firstOperand !== null) {
       seccondOperand = +display.textContent;
     }
+    return true;
   }
+  return false;
 }
 
 function clickedOperation(e) {
@@ -68,18 +84,13 @@ function clickedOperation(e) {
     if (!lastOperation) {
       lastOperation = e.currentTarget;
       readyForWritting = true;
+      dotClicked = false;
       if (firstOperand === null) firstOperand = +display.textContent;
     } else {
       if (seccondOperand === null) {
         lastOperation = e.currentTarget;
         readyForWritting = true;
       } else {
-        //do last operation
-        //result from last operation set for firstOperand
-        //set the new last operation
-        //clear the seccond operand
-
-        //equal operation
         equalOperation();
         lastOperation = e.currentTarget;
         readyForWritting = true;
@@ -110,6 +121,7 @@ function equalOperation() {
     displayTheResult(firstOperand);
     readyForWritting = false;
     readyForSign = true;
+    dotClicked = true;
   }
 }
 
