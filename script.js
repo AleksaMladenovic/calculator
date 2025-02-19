@@ -13,6 +13,13 @@ let lastOperation = null;
 let dotClicked = false;
 const DISPLAY_SIZE = 9;
 
+function setOperation(newOperation){
+    if(lastOperation!==null)
+        lastOperation.classList.remove("picked");
+    if(newOperation!==null)
+        newOperation.classList.add("picked");
+    lastOperation = newOperation;
+}
 dotBtn.addEventListener("click", (e)=>{
     if(!dotClicked)
     {
@@ -68,7 +75,7 @@ function addNumber(number) {
   if (display.textContent.length >= DISPLAY_SIZE) readyForWritting = false;
   else {
     display.textContent += number;
-    if(number!=='.' &&+display.textContent!==0)
+    if(!dotClicked&&number!='.')
     display.textContent = +display.textContent;
     readyForSign = true;
     if (firstOperand !== null) {
@@ -82,17 +89,17 @@ function addNumber(number) {
 function clickedOperation(e) {
   if (readyForSign) {
     if (!lastOperation) {
-      lastOperation = e.currentTarget;
+      setOperation(e.currentTarget);
       readyForWritting = true;
       dotClicked = false;
       if (firstOperand === null) firstOperand = +display.textContent;
     } else {
       if (seccondOperand === null) {
-        lastOperation = e.currentTarget;
+        setOperation(e.currentTarget);
         readyForWritting = true;
       } else {
         equalOperation();
-        lastOperation = e.currentTarget;
+        setOperation(e.currentTarget);
         readyForWritting = true;
       }
     }
@@ -116,7 +123,7 @@ function equalOperation() {
         firstOperand = firstOperand / seccondOperand;
         break;
     }
-    lastOperation = null;
+    setOperation(null);
     seccondOperand = null;
     displayTheResult(firstOperand);
     readyForWritting = false;

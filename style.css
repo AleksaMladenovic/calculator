@@ -60,7 +60,9 @@ button.orange{
 button.grey{
     background-color: #a6a6a6;
 }
-
+button.orange.picked{
+    background-color: #a86303;
+}
 #btn0{
     flex: 2.3 2 0px;
 }
