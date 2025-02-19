@@ -32,6 +32,7 @@ body{
 }
 #display{
     font-size: 80px;
+    padding: 0 20px;
 }
 #buttonsDiv{
     width: 400px;
