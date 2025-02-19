@@ -123,6 +123,7 @@ function clickedOperation(e) {
 function equalOperation() {
   if (firstOperand !== null && lastOperation !== null) {
     let sign = lastOperation.textContent;
+    seccondOperand = +display.textContent;
     switch (sign) {
       case "+":
         firstOperand = firstOperand + seccondOperand;
