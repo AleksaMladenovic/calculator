@@ -143,7 +143,7 @@ function equalOperation() {
     displayTheResult(firstOperand);
     readyForWritting = false;
     readyForSign = true;
-    dotClicked = true;
+    dotClicked = false;
     if(firstOperand===NaN||firstOperand===Infinity)
     {
         readyForWritting = false;
