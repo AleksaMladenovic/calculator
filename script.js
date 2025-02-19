@@ -4,6 +4,7 @@ const plusToMinus = document.querySelector("#plusToMinus");
 const operationBtnsArray = [...document.querySelectorAll(".operation")];
 const equalBtn = document.querySelector("#equal");
 const dotBtn = document.querySelector("#dot");
+const cBtn = document.querySelector("#C");
 
 let readyForWritting = true;
 let readyForSign = false;
@@ -12,6 +13,18 @@ let seccondOperand = null;
 let lastOperation = null;
 let dotClicked = false;
 const DISPLAY_SIZE = 9;
+
+cBtn.addEventListener("click",resetAll);
+
+function resetAll(){
+    readyForWritting = true;
+    readyForSign = false;
+    firstOperand = null;
+    seccondOperand = null;
+    setOperation(null);
+    dotClicked = false;
+    display.textContent = "";
+}
 
 function setOperation(newOperation){
     if(lastOperation!==null)
@@ -45,6 +58,7 @@ plusToMinus.addEventListener("click", () => {
     ) {
       if (display.textContent[0] !== "-") {
         display.textContent = "-" + display.textContent;
+        if(display.textContent>DISPLAY_SIZE)
         displayTheResult(+display.textContent);
       } else {
         display.textContent = display.textContent.slice(1);
@@ -129,6 +143,11 @@ function equalOperation() {
     readyForWritting = false;
     readyForSign = true;
     dotClicked = true;
+    if(firstOperand===NaN||firstOperand===Infinity)
+    {
+        readyForWritting = false;
+        readyForSign = false;
+    }
   }
 }
 
